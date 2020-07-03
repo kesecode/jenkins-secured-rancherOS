@@ -1,4 +1,3 @@
-### WORK IN PROGRESS
 # jenkins-secured-rancherOS
 Installation script for jenkins secured via ngninx and certbot (letsentcrypt).
 
