@@ -6,6 +6,7 @@ services:
     restart: unless-stopped
     volumes:
       - jenkins:/var/jenkins_home
+    command: sleep 10000
     ports:
       - "8080:8080"
       - "50000:50000"
@@ -27,3 +28,6 @@ services:
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+volumes:
+  jenkins:
+      external: false
