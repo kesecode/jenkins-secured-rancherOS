@@ -1,6 +1,14 @@
 version: '3'
 
 services:
+  jenkins:
+    image: jenkins/jenkins
+    restart: unless-stopped
+    volumes:
+      - /jenkins:/var/jenkins_home
+    ports:
+      - "8080:8080"
+      - "50000:50000"
   nginx:
     image: nginx:1.19-alpine
     restart: unless-stopped
@@ -19,11 +27,3 @@ services:
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
-  jenkins:
-    image: jenkins/jenkins
-    restart: unless-stopped
-    volumes:
-      - /jenkins:/var/jenkins_home
-    ports:
-      - "8080:8080"
-      - "50000:50000"
