@@ -5,8 +5,8 @@ services:
     image: nginx:1.19-alpine
     restart: unless-stopped
     container_name: nginx
-    environment:
-      DEFAULT_HOST: default.vhost
+    networks:
+      nginx_network
     volumes:
       - ./data/nginx:/etc/nginx/conf.d
       - ./data/certbot/conf:/etc/letsencrypt
@@ -28,10 +28,7 @@ services:
     restart: unless-stopped
     container_name: jenkins
     networks:
-      - frontproxy_default
-      - default
-    environment:
-      - VIRTUAL_HOST=localhost:8080
+      - nginx_network
     volumes:
       - jenkins:/var/jenkins_home
     ports:
@@ -41,6 +38,6 @@ volumes:
   jenkins:
       external: false
 networks:
-  frontproxy_default:
-    external: true
+  nginx_network:
+    
     
