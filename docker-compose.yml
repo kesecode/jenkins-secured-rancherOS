@@ -5,7 +5,7 @@ services:
     image: jenkins/jenkins
     restart: unless-stopped
     volumes:
-      - /jenkins:/var/jenkins_home
+      - jenkins:/var/jenkins_home
     ports:
       - "8080:8080"
       - "50000:50000"
@@ -13,9 +13,9 @@ services:
     image: nginx:latest
     restart: unless-stopped
     volumes:
-      - .jenkins-secured-rancherOS/data/nginx:/etc/nginx/conf.d
-      - .jenkins-secured-rancherOS/data/certbot/conf:/etc/letsencrypt
-      - .jenkins-secured-rancherOS/data/certbot/www:/var/www/certbot
+      - .data/nginx:/etc/nginx/conf.d
+      - .data/certbot/conf:/etc/letsencrypt
+      - .data/certbot/www:/var/www/certbot
     ports:
       - "80:80"
       - "443:443"
@@ -24,6 +24,6 @@ services:
     image: certbot/certbot
     restart: unless-stopped
     volumes:
-      - .jenkins-secured-rancherOS/data/certbot/conf:/etc/letsencrypt
-      - .jenkins-secured-rancherOS/data/certbot/www:/var/www/certbot
+      - .data/certbot/conf:/etc/letsencrypt
+      - .data/certbot/www:/var/www/certbot
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
