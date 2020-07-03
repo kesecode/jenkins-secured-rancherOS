@@ -5,8 +5,6 @@ services:
     image: nginx:1.19-alpine
     restart: unless-stopped
     container_name: nginx
-    networks:
-      nginx_network
     volumes:
       - ./data/nginx:/etc/nginx/conf.d
       - ./data/certbot/conf:/etc/letsencrypt
@@ -27,8 +25,6 @@ services:
     image: jenkins/jenkins
     restart: unless-stopped
     container_name: jenkins
-    networks:
-      - nginx_network
     volumes:
       - jenkins:/var/jenkins_home
     ports:
@@ -37,7 +33,4 @@ services:
 volumes:
   jenkins:
       external: false
-networks:
-  nginx_network:
-    
     
