@@ -5,7 +5,7 @@ services:
     image: jenkins/jenkins
     restart: unless-stopped
     volumes:
-      - jenkins:/var/jenkins_home
+      - /jenkins:/var/jenkins_home
     ports:
       - "8080:8080"
       - "50000:50000"
